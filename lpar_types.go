@@ -1,5 +1,25 @@
 package perfstat
 
+type PartitionType struct {
+	bool SmtCapable        /* OS supports SMT mode */
+	bool SmtEnabled        /* SMT mode is on */
+	bool LparCapable       /* OS supports logical partitioning */
+	bool LparEnabled       /* logical partitioning is on */
+	bool SharedCapable     /* OS supports shared processor LPAR */
+	bool SharedEnabled     /* partition runs in shared mode */
+	bool DLparCapable      /* OS supports dynamic LPAR */
+	bool Capped            /* partition is capped */
+	bool Kernel64bit       /* kernel is 64 bit */
+	bool PoolUtilAuthority /* pool utilization available */
+	bool DonateCapable     /* capable of donating cycles */
+	bool DonateEnabled     /* enabled for donating cycles */
+	bool AmsCapable        /* 1 = AMS(Active Memory Sharing) capable, 0 = Not AMS capable */
+	bool AmsEnabled        /* 1 = AMS(Active Memory Sharing) enabled, 0 = Not AMS enabled */
+	bool PowerSave         /*1= Power saving mode is enabled*/
+	bool AmeEnabled        /* Active Memory Expansion is enabled */
+	bool SharedExtended
+}
+
 type PartitionValue struct {
 	int64 Online
 	int64 Max
