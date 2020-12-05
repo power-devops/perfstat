@@ -1,7 +1,8 @@
 package perfstat
 
+import "golang.org/x/sys/unix"
 // function Getsystemcfg() is defined in golang.org/x/sys/unix
-// we define here just missing constants for the function
+// we define here just missing constants for the function and some helpers
 
 // Calls to getsystemcfg()
 const (
@@ -271,3 +272,361 @@ const (
 // if impl&IMPL_POWER9 != 0 {
 //     // we are running on POWER9
 // }
+
+func GetCPUImplementation() string {
+	impl := unix.Getsystemcfg(SC_IMPL)
+	switch {
+	case impl & IMPL_POWER4 != 0:
+		return "POWER4"
+	case impl & IMPL_POWER5 != 0:
+		return "POWER5"
+	case impl & IMPL_POWER6 != 0:
+		return "POWER6"
+	case impl & IMPL_POWER7 != 0:
+		return "POWER7"
+	case impl & IMPL_POWER8 != 0:
+		return "POWER8"
+	case impl & IMPL_POWER9 != 0:
+		return "POWER9"
+	default:
+		return "Unknown"
+	}
+}
+
+func POWER9OrNewer() bool {
+	impl := unix.Getsystemcfg(SC_IMPL)
+	if impl & IMPL_POWER9 != 0 {
+		return true
+	}
+	return false
+}
+
+func POWER9() bool {
+	impl := unix.Getsystemcfg(SC_IMPL)
+	if impl & IMPL_POWER9 != 0 {
+		return true
+	}
+	return false
+}
+
+func POWER8OrNewer() bool {
+	impl := unix.Getsystemcfg(SC_IMPL)
+	if impl & IMPL_POWER9 != 0 || impl & IMPL_POWER8 != 0 {
+		return true
+	}
+	return false
+}
+
+func POWER8() bool {
+	impl := unix.Getsystemcfg(SC_IMPL)
+	if impl & IMPL_POWER8 != 0 {
+		return true
+	}
+	return false
+}
+
+func POWER7OrNewer() bool {
+	impl := unix.Getsystemcfg(SC_IMPL)
+	if impl & IMPL_POWER9 != 0 || impl & IMPL_POWER8 != 0 || impl & IMPL_POWER7 != 0 {
+		return true
+	}
+	return false
+}
+
+func POWER7() bool {
+	impl := unix.Getsystemcfg(SC_IMPL)
+	if impl & IMPL_POWER7 != 0 {
+		return true
+	}
+	return false
+}
+
+func HasTransactionalMemory() bool {
+	impl := unix.Getsystemcfg(SC_TM_VER)
+	if impl > 0 {
+		return true
+	}
+	return false
+}
+
+func Is64Bit() bool {
+	impl := unix.Getsystemcfg(SC_WIDTH)
+	if impl == 64 {
+		return true
+	}
+	return false
+}
+
+func IsSMP() bool {
+	impl := unix.Getsystemcfg(SC_NCPUS)
+	if impl > 1 {
+		return true
+	}
+	return false
+}
+
+func HasVMX() bool {
+	impl := unix.Getsystemcfg(SC_VMX_VER)
+	if impl > 0 {
+		return true
+	}
+	return false
+}
+
+func HasVSX() bool {
+	impl := unix.Getsystemcfg(SC_VMX_VER)
+	if impl > 1 {
+		return true
+	}
+	return false
+}
+
+func HasDFP() bool {
+	impl := unix.Getsystemcfg(SC_DFP_STAT)
+	if impl > 1 {
+		return true
+	}
+	return false
+}
+
+func HasNxGzip() bool {
+	impl := unix.Getsystemcfg(SC_NX_CAP)
+	if impl & NX_GZIP_PRESENT > 0 {
+		return true
+	}
+	return false
+}
+
+func PksCapable() bool {
+	impl := unix.Getsystemcfg(SC_PKS_STATE)
+	if impl & PKS_STATE_CAPABLE > 0 {
+		return true
+	}
+	return false
+}
+
+func PksEnabled() bool {
+	impl := unix.Getsystemcfg(SC_PKS_STATE)
+	if impl & PKS_STATE_ENABLED > 0 {
+		return true
+	}
+	return false
+}
+
+func CPUMode() string {
+	impl := unix.Getsystemcfg(SC_VERS)
+	switch impl {
+	case PV_9, PV_9_Compat:
+		return "POWER9"
+	case PV_8, PV_8_Compat:
+		return "POWER8"
+	case PV_7, PV_7_Compat:
+		return "POWER7"
+	default:
+		return "Unknown"
+	}
+}
+
+func KernelBits() int {
+	impl := unix.Getsystemcfg(SC_KRN_ATTR)
+	if impl & KERN_TYPE == KERN_TYPE {
+		return 64
+	}
+	return 32
+}
+
+func IsLPAR() bool {
+	impl := unix.Getsystemcfg(SC_KRN_ATTR)
+	if impl & KERN_LPAR == KERN_LPAR {
+		return true
+	}
+	return false
+}
+
+func CpuAddCapable() bool {
+	impl := unix.Getsystemcfg(SC_KRN_ATTR)
+	if impl & KERN_DR_CPU_ADD == KERN_DR_CPU_ADD {
+		return true
+	}
+	return false
+}
+
+func CpuRemoveCapable() bool {
+	impl := unix.Getsystemcfg(SC_KRN_ATTR)
+	if impl & KERN_DR_CPU_RM == KERN_DR_CPU_RM {
+		return true
+	}
+	return false
+}
+
+func MemoryAddCapable() bool {
+	impl := unix.Getsystemcfg(SC_KRN_ATTR)
+	if impl & KERN_DR_MEM_ADD == KERN_DR_MEM_ADD {
+		return true
+	}
+	return false
+}
+
+func MemoryRemoveCapable() bool {
+	impl := unix.Getsystemcfg(SC_KRN_ATTR)
+	if impl & KERN_DR_MEM_RM == KERN_DR_MEM_RM {
+		return true
+	}
+	return false
+}
+
+func DLparCapable() bool {
+	impl := unix.Getsystemcfg(SC_KRN_ATTR)
+	if impl & (KERN_DR_CPU_ADD | KERN_DR_CPU_RM | KERN_DR_MEM_ADD | KERN_DR_MEM_RM) > 0 {
+		return true
+	}
+	return false
+}
+
+func IsNUMA() bool {
+	impl := unix.Getsystemcfg(SC_KRN_ATTR)
+	if impl & KERN_NUMA > 0 {
+		return true
+	}
+	return false
+}
+
+func KernelKeys() bool {
+	impl := unix.Getsystemcfg(SC_KRN_ATTR)
+	if impl & KERN_KKEY_ENABLED > 0 {
+		return true
+	}
+	return false
+}
+
+func RecoveryMode() bool {
+	impl := unix.Getsystemcfg(SC_KRN_ATTR)
+	if impl & KERN_RECOVERY > 0 {
+		return true
+	}
+	return false
+}
+
+func EnhancedAffinity() bool  {
+	impl := unix.Getsystemcfg(SC_KRN_ATTR)
+	if impl & KERN_ENH_AFFINITY > 0 {
+		return true
+	}
+	return false
+}
+
+func VTpmEnabled() bool {
+	impl := unix.Getsystemcfg(SC_KRN_ATTR)
+	if impl & KERN_VTPM > 0 {
+		return true
+	}
+	return false
+}
+
+func IsVIOS() bool {
+	impl := unix.Getsystemcfg(SC_KRN_ATTR)
+	if impl & KERN_VIOS > 0 {
+		return true
+	}
+	return false
+}
+
+func MLSEnabled() bool {
+	impl := unix.Getsystemcfg(SC_KRN_ATTR)
+	if impl & KERN_MLS > 0 {
+		return true
+	}
+	return false
+}
+
+func SPLparCapable() bool {
+	impl := unix.Getsystemcfg(SC_SPLP_STAT)
+	if impl & SPLPAR_CAPABLE > 0 {
+		return true
+	}
+	return false
+}
+
+func SPLparEnabled() bool {
+	impl := unix.Getsystemcfg(SC_SPLP_STAT)
+	if impl & SPLPAR_ENABLED > 0 {
+		return true
+	}
+	return false
+}
+
+func DedicatedLpar() bool {
+	return !SPLparEnabled()
+}
+
+func SPLparCapped() bool {
+	impl := unix.Getsystemcfg(SC_VCAPW)
+	if impl == 0 {
+		return true
+	}
+	return false
+}
+
+func SPLparDonating() bool {
+	impl := unix.Getsystemcfg(SC_SPLP_STAT)
+	if impl & SPLPAR_DONATE_CAPABLE > 0 {
+		return true
+	}
+	return false
+}
+
+func SmtCapable() bool {
+	impl := unix.Getsystemcfg(SC_SMT_STAT)
+	if impl & SMT_CAPABLE > 0 {
+		return true
+	}
+	return false
+}
+
+func SmtEnabled() bool {
+	impl := unix.Getsystemcfg(SC_SMT_STAT)
+	if impl & SMT_ENABLE > 0 {
+		return true
+	}
+	return false
+}
+
+func VrmCapable() bool {
+	impl := unix.Getsystemcfg(SC_VRM_STAT)
+	if impl & VRM_CAPABLE > 0 {
+		return true
+	}
+	return false
+}
+
+func VrmEnabled() bool {
+	impl := unix.Getsystemcfg(SC_VRM_STAT)
+	if impl & VRM_ENABLE > 0 {
+		return true
+	}
+	return false
+}
+
+func AmeEnabled() bool {
+	impl := unix.Getsystemcfg(SC_AME_STAT)
+	if impl & AME_ENABLE > 0 {
+		return true
+	}
+	return false
+}
+
+func EcoCapable() bool {
+	impl := unix.Getsystemcfg(SC_ECO_STAT)
+	if impl & ECO_CAPABLE > 0 {
+		return true
+	}
+	return false
+}
+
+func EcoEnabled() bool {
+	impl := unix.Getsystemcfg(SC_ECO_STAT)
+	if impl & ECO_ENABLE > 0 {
+		return true
+	}
+	return false
+}
