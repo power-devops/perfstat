@@ -1,68 +1,68 @@
 package perfstat
 
 type PartitionType struct {
-	bool SmtCapable        /* OS supports SMT mode */
-	bool SmtEnabled        /* SMT mode is on */
-	bool LparCapable       /* OS supports logical partitioning */
-	bool LparEnabled       /* logical partitioning is on */
-	bool SharedCapable     /* OS supports shared processor LPAR */
-	bool SharedEnabled     /* partition runs in shared mode */
-	bool DLparCapable      /* OS supports dynamic LPAR */
-	bool Capped            /* partition is capped */
-	bool Kernel64bit       /* kernel is 64 bit */
-	bool PoolUtilAuthority /* pool utilization available */
-	bool DonateCapable     /* capable of donating cycles */
-	bool DonateEnabled     /* enabled for donating cycles */
-	bool AmsCapable        /* 1 = AMS(Active Memory Sharing) capable, 0 = Not AMS capable */
-	bool AmsEnabled        /* 1 = AMS(Active Memory Sharing) enabled, 0 = Not AMS enabled */
-	bool PowerSave         /*1= Power saving mode is enabled*/
-	bool AmeEnabled        /* Active Memory Expansion is enabled */
-	bool SharedExtended
+	SmtCapable        bool /* OS supports SMT mode */
+	SmtEnabled        bool /* SMT mode is on */
+	LparCapable       bool /* OS supports logical partitioning */
+	LparEnabled       bool /* logical partitioning is on */
+	SharedCapable     bool /* OS supports shared processor LPAR */
+	SharedEnabled     bool /* partition runs in shared mode */
+	DLparCapable      bool /* OS supports dynamic LPAR */
+	Capped            bool /* partition is capped */
+	Kernel64bit       bool /* kernel is 64 bit */
+	PoolUtilAuthority bool /* pool utilization available */
+	DonateCapable     bool /* capable of donating cycles */
+	DonateEnabled     bool /* enabled for donating cycles */
+	AmsCapable        bool /* 1 = AMS(Active Memory Sharing) capable, 0 = Not AMS capable */
+	AmsEnabled        bool /* 1 = AMS(Active Memory Sharing) enabled, 0 = Not AMS enabled */
+	PowerSave         bool /*1= Power saving mode is enabled*/
+	AmeEnabled        bool /* Active Memory Expansion is enabled */
+	SharedExtended    bool
 }
 
 type PartitionValue struct {
-	int64 Online
-	int64 Max
-	int64 Min
-	int64 Desired
+	Online  int64
+	Max     int64
+	Min     int64
+	Desired int64
 }
 
 type PartitionConfig struct {
-	int64          Version                  /* Version number */
-	string         Name                     /* Partition Name */
-	string         Node                     /* Node Name */
-	PartitionType  Conf                     /* Partition Properties */
-	int32          Number                   /* Partition Number */
-	int32          GroupID                  /* Group ID */
-	string         ProcessorFamily          /* Processor Type */
-	string         ProcessorModel           /* Processor Model */
-	string         MachineID                /* Machine ID */
-	float64        ProcessorMhz             /* Processor Clock Speed in MHz */
-	PartitionValue NumProcessors            /* Number of Configured Physical Processors in frame*/
-	string         OSName                   /* Name of Operating System */
-	string         OSVersion                /* Version of operating System */
-	string         OSBuild                  /* Build of Operating System */
-	int32          LCpus                    /* Number of Logical CPUs */
-	int32          SmtThreads               /* Number of SMT Threads */
-	int32          Drives                   /* Total Number of Drives */
-	int32          NetworkAdapters          /* Total Number of Network Adapters */
-	PartitionValue CpuCap                   /* Min, Max and Online CPU Capacity */
-	int32          Weightage                /* Variable Processor Capacity Weightage */
-	int32          EntCapacity              /* number of processor units this partition is entitled to receive */
-	PartitionValue VCpus                    /* Min, Max and Online Virtual CPUs */
-	int32          PoolID                   /* Shared Pool ID of physical processors, to which this partition belongs*/
-	int32          ActiveCpusInPool         /* Count of physical CPUs in the shared processor pool, to which this partition belongs */
-	int32          PoolWeightage            /* Pool Weightage */
-	int32          SharedPCpu               /* Number of physical processors allocated for shared processor use */
-	int32          MaxPoolCap               /* Maximum processor capacity of partition's pool */
-	int32          EntPoolCap               /* Entitled processor capacity of partition's pool */
-	PartitionValue Mem                      /* Min, Max and Online Memory */
-	int32          MemWeightage             /* Variable Memory Capacity Weightage */
-	int64          TotalIOMemoryEntitlement /* I/O Memory Entitlement of the partition in bytes */
-	int32          MemPoolID                /* AMS pool id of the pool the LPAR belongs to */
-	int64          HyperPgSize              /* Hypervisor page size in KB*/
-	PartitionValue ExpMem                   /* Min, Max and Online Expanded Memory */
-	int64          TargetMemExpFactor       /* Target Memory Expansion Factor scaled by 100 */
-	int64          TargetMemExpSize         /* Expanded Memory Size in MB */
-	int32          SubProcessorMode         /* Split core mode, its value can be 0,1,2 or 4. 0 for unsupported, 1 for capable but not enabled, 2 or 4 for enabled*/
+	Version                  int64          /* Version number */
+	Name                     string         /* Partition Name */
+	Node                     string         /* Node Name */
+	Conf                     PartitionType  /* Partition Properties */
+	Number                   int32          /* Partition Number */
+	GroupID                  int32          /* Group ID */
+	ProcessorFamily          string         /* Processor Type */
+	ProcessorModel           string         /* Processor Model */
+	MachineID                string         /* Machine ID */
+	ProcessorMhz             float64        /* Processor Clock Speed in MHz */
+	NumProcessors            PartitionValue /* Number of Configured Physical Processors in frame*/
+	OSName                   string         /* Name of Operating System */
+	OSVersion                string         /* Version of operating System */
+	OSBuild                  string         /* Build of Operating System */
+	LCpus                    int32          /* Number of Logical CPUs */
+	SmtThreads               int32          /* Number of SMT Threads */
+	Drives                   int32          /* Total Number of Drives */
+	NetworkAdapters          int32          /* Total Number of Network Adapters */
+	CpuCap                   PartitionValue /* Min, Max and Online CPU Capacity */
+	Weightage                int32          /* Variable Processor Capacity Weightage */
+	EntCapacity              int32          /* number of processor units this partition is entitled to receive */
+	VCpus                    PartitionValue /* Min, Max and Online Virtual CPUs */
+	PoolID                   int32          /* Shared Pool ID of physical processors, to which this partition belongs*/
+	ActiveCpusInPool         int32          /* Count of physical CPUs in the shared processor pool, to which this partition belongs */
+	PoolWeightage            int32          /* Pool Weightage */
+	SharedPCpu               int32          /* Number of physical processors allocated for shared processor use */
+	MaxPoolCap               int32          /* Maximum processor capacity of partition's pool */
+	EntPoolCap               int32          /* Entitled processor capacity of partition's pool */
+	Mem                      PartitionValue /* Min, Max and Online Memory */
+	MemWeightage             int32          /* Variable Memory Capacity Weightage */
+	TotalIOMemoryEntitlement int64          /* I/O Memory Entitlement of the partition in bytes */
+	MemPoolID                int32          /* AMS pool id of the pool the LPAR belongs to */
+	HyperPgSize              int64          /* Hypervisor page size in KB*/
+	ExpMem                   PartitionValue /* Min, Max and Online Expanded Memory */
+	TargetMemExpFactor       int64          /* Target Memory Expansion Factor scaled by 100 */
+	TargetMemExpSize         int64          /* Expanded Memory Size in MB */
+	SubProcessorMode         int32          /* Split core mode, its value can be 0,1,2 or 4. 0 for unsupported, 1 for capable but not enabled, 2 or 4 for enabled*/
 }
