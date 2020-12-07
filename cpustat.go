@@ -13,9 +13,11 @@ import "C"
 import (
 	"fmt"
 	"runtime"
+	"time"
+	"unsafe"
 )
 
-func Cpu() ([]CPU, error) {
+func CpuStat() ([]CPU, error) {
 	var cpustat *C.perfstat_cpu_t
 	var cpu C.perfstat_id_t
 
@@ -38,7 +40,7 @@ func Cpu() ([]CPU, error) {
 	return c, nil
 }
 
-func CpuTotal() (*CPUTotal, error) {
+func CpuTotalStat() (*CPUTotal, error) {
 	var cpustat *C.perfstat_cpu_total_t
 
 	cpustat = (*C.perfstat_cpu_total_t)(C.malloc(C.sizeof_perfstat_cpu_total_t))
@@ -48,4 +50,41 @@ func CpuTotal() (*CPUTotal, error) {
 	}
 	c := perfstatcputotal2cputotal(cpustat)
 	return &c, nil
+}
+
+func CpuUtilStat(intvl time.Duration) (*CPUUtil, error) {
+	var cpuutil *C.perfstat_cpu_util_t
+	var newt *C.perfstat_cpu_total_t
+	var oldt *C.perfstat_cpu_total_t
+	var data C.perfstat_rawdata_t
+
+	oldt = (*C.perfstat_cpu_total_t)(C.malloc(C.sizeof_perfstat_cpu_total_t))
+	newt = (*C.perfstat_cpu_total_t)(C.malloc(C.sizeof_perfstat_cpu_total_t))
+	cpuutil = (*C.perfstat_cpu_util_t)(C.malloc(C.sizeof_perfstat_cpu_util_t))
+
+	r := C.perfstat_cpu_total(nil, oldt, C.sizeof_perfstat_cpu_total_t, 1)
+	if r <= 0 {
+		return nil, fmt.Errorf("error perfstat_cpu_total()")
+	}
+
+	time.Sleep(intvl)
+
+	r = C.perfstat_cpu_total(nil, newt, C.sizeof_perfstat_cpu_total_t, 1)
+	if r <= 0 {
+		return nil, fmt.Errorf("error perfstat_cpu_total()")
+	}
+
+	data._type = C.UTIL_CPU_TOTAL
+	data.curstat = unsafe.Pointer(newt)
+	data.prevstat = unsafe.Pointer(oldt)
+	data.sizeof_data = C.sizeof_perfstat_cpu_total_t
+	data.cur_elems = 1
+	data.prev_elems = 1
+
+	r = C.perfstat_cpu_util(&data, cpuutil, C.sizeof_perfstat_cpu_util_t, 1)
+	if r <= 0 {
+		return nil, fmt.Errorf("error perfstat_cpu_util()")
+	}
+	u := perfstatcpuutil2cpuutil(cpuutil)
+	return &u, nil
 }

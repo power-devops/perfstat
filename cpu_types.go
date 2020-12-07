@@ -161,3 +161,27 @@ type CPUTotal struct {
 	PurrCoalescing   int64 /* If the calling partition is authorized to see pool wide statistics then PURR cycles consumed to coalesce data else set to zero.*/
 	SpurrCoalescing  int64 /* If the calling partition is authorized to see pool wide statistics then SPURR cycles consumed to coalesce data else set to zero.  */
 }
+
+type CPUUtil struct {
+	Version          int64
+	CpuID            string  /* holds the id of the cpu */
+	Entitlement      float32 /* Partition's entitlement */
+	UserPct          float32 /* % of utilization in user mode */
+	KernPct          float32 /* % of utilization in kernel mode */
+	IdlePct          float32 /* % of utilization in idle mode */
+	WaitPct          float32 /* % of utilization in wait mode */
+	PhysicalBusy     float32 /* physical cpus busy */
+	PhysicalConsumed float32 /* total cpus consumed by the partition */
+	FreqPct          float32 /* Average freq% over the last interval */
+	EntitlementPct   float32 /* % of entitlement used */
+	BusyPct          float32 /* % of entitlement busy */
+	IdleDonatedPct   float32 /* % idle cycles donated */
+	BusyDonatedPct   float32 /* % of busy cycles donated */
+	IdleStolenPct    float32 /* % idle cycles stolen */
+	BusyStolenPct    float32 /* % busy cycles stolen */
+	LUserPct         float32 /* % of utilization in user mode, in terms of logical processor ticks */
+	LKernPct         float32 /* % of utilization in kernel mode, in terms of logical processor ticks*/
+	LIdlePct         float32 /* % of utilization in idle mode, in terms of logical processor ticks */
+	LWaitPct         float32 /* % of utilization in wait mode, in terms of logical processor ticks */
+	DeltaTime        int64   /*   delta time in milliseconds, for which utilization is evaluated */
+}

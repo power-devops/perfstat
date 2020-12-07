@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	pinfo, err := perfstat.Partition()
+	pinfo, err := perfstat.PartitionStat()
 	if err != nil {
 		fmt.Println(err)
 		return

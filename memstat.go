@@ -59,7 +59,7 @@ func perfstatmemorytotal2memorytotal(n C.perfstat_memory_total_t) MemoryTotal {
 	return m
 }
 
-func Memory() (*MemoryTotal, error) {
+func MemoryTotalStat() (*MemoryTotal, error) {
 	var memory C.perfstat_memory_total_t
 
 	rc := C.perfstat_memory_total(nil, &memory, C.sizeof_perfstat_memory_total_t, 1)

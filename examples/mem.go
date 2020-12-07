@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	minfo, _ := perfstat.Memory()
+	minfo, _ := perfstat.MemoryTotalStat()
 	fmt.Printf("Memory statistics\n")
 	fmt.Printf("-----------------\n")
 	fmt.Printf("real memory size                 : %v MB\n", minfo.RealTotal*4096/1024/1024)

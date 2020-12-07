@@ -84,7 +84,7 @@ func perfstatpartitionconfig2partitionconfig(n C.perfstat_partition_config_t) Pa
 	return p
 }
 
-func Partition() (*PartitionConfig, error) {
+func PartitionStat() (*PartitionConfig, error) {
 	var part C.perfstat_partition_config_t
 
 	rc := C.perfstat_partition_config(nil, &part, C.sizeof_perfstat_partition_config_t, 1)

@@ -39,7 +39,7 @@ func perfstatdisktotal2disktotal(n C.perfstat_disk_total_t) DiskTotal {
 	return d
 }
 
-func DisksStat() (*DiskTotal, error) {
+func DiskTotalStat() (*DiskTotal, error) {
 	var disk C.perfstat_disk_total_t
 
 	rc := C.perfstat_disk_total(nil, &disk, C.sizeof_perfstat_disk_total_t, 1)

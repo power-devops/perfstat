@@ -172,3 +172,32 @@ func perfstatcputotal2cputotal(n *C.perfstat_cpu_total_t) CPUTotal {
 	c.SpurrCoalescing = int64(n.spurr_coalescing)
 	return c
 }
+
+func perfstatcpuutil2cpuutil(n *C.perfstat_cpu_util_t) CPUUtil {
+	var c CPUUtil
+
+	c.Version = int64(n.version)
+	c.CpuID = C.GoString(&n.cpu_id[0])
+	c.Entitlement = float32(n.entitlement)
+	c.UserPct = float32(n.user_pct)
+	c.KernPct = float32(n.kern_pct)
+	c.IdlePct = float32(n.idle_pct)
+	c.WaitPct = float32(n.wait_pct)
+	c.PhysicalBusy = float32(n.physical_busy)
+	c.PhysicalConsumed = float32(n.physical_consumed)
+	c.FreqPct = float32(n.freq_pct)
+	c.EntitlementPct = float32(n.entitlement_pct)
+	c.BusyPct = float32(n.busy_pct)
+	c.IdleDonatedPct = float32(n.idle_donated_pct)
+	c.BusyDonatedPct = float32(n.busy_donated_pct)
+	c.IdleStolenPct = float32(n.idle_stolen_pct)
+	c.BusyStolenPct = float32(n.busy_stolen_pct)
+	c.LUserPct = float32(n.l_user_pct)
+	c.LKernPct = float32(n.l_kern_pct)
+	c.LIdlePct = float32(n.l_idle_pct)
+	c.LWaitPct = float32(n.l_wait_pct)
+	c.DeltaTime = int64(n.delta_time)
+
+	return c
+}
+

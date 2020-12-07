@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	dinfo, _ := perfstat.DisksStat()
+	dinfo, _ := perfstat.DiskTotalStat()
 	fmt.Printf("Total disk statistics\n")
 	fmt.Printf("---------------------\n")
 	fmt.Printf("number of  disks         : %v\n", dinfo.Number)
