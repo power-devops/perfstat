@@ -62,3 +62,39 @@ type DiskAdapter struct {
 	QFull       int64  /* "Service" queue full occurrence count (number of times the adapter/devices connected to the adapter is not accepting any more request) */
 	QSampled    int64  /* accumulated sampled */
 }
+
+type Disk struct {
+	Name        string /* name of the disk */
+	Description string /* disk description (from ODM) */
+	VGName      string /* volume group name (from ODM) */
+	Size        int64  /* size of the disk (in MB) */
+	Free        int64  /* free portion of the disk (in MB) */
+	BSize       int64  /* disk block size (in bytes) */
+	Xfers       int64  /* number of transfers to/from disk */
+	Wblks       int64  /* number of blocks written to disk */
+	Rblks       int64  /* number of blocks read from disk */
+	QDepth      int64  /* instantaneous "service" queue depth (number of requests sent to disk and not completed yet) */
+	Time        int64  /* amount of time disk is active */
+	Adapter     string /* disk adapter name */
+	PathsCount  int32  /* number of paths to this disk */
+	QFull       int64  /* "service" queue full occurrence count (number of times the disk is not accepting any more request) */
+	Rserv       int64  /* read or receive service time */
+	RTimeOut    int64  /* number of read request timeouts */
+	Rfailed     int64  /* number of failed read requests */
+	MinRserv    int64  /* min read or receive service time */
+	MaxRserv    int64  /* max read or receive service time */
+	Wserv       int64  /* write or send service time */
+	WTimeOut    int64  /* number of write request timeouts */
+	Wfailed     int64  /* number of failed write requests */
+	MinWserv    int64  /* min write or send service time */
+	MaxWserv    int64  /* max write or send service time */
+	WqDepth     int64  /* instantaneous wait queue depth (number of requests waiting to be sent to disk) */
+	WqSampled   int64  /* accumulated sampled dk_wq_depth */
+	WqTime      int64  /* accumulated wait queueing time */
+	WqMinTime   int64  /* min wait queueing time */
+	WqMaxTime   int64  /* max wait queueing time */
+	QSampled    int64  /* accumulated sampled dk_q_depth */
+	Version     int64  /* version number (1, 2, etc.,) */
+	PseudoDisk  bool   /*Indicates whether pseudo or physical disk */
+	VTDisk      bool   /* 1- Virtual Target Disk, 0 - Others */
+}

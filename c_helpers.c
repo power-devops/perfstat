@@ -15,3 +15,9 @@ perfstat_diskadapter_t *get_diskadapter_stat(perfstat_diskadapter_t *adapter, in
 
 	return &(adapter[n]);
 }
+
+perfstat_disk_t *get_disk_stat(perfstat_disk_t *disk, int n) {
+	if (!disk) return NULL;
+
+	return &(disk[n]);
+}
