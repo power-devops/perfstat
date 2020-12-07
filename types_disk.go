@@ -98,3 +98,31 @@ type Disk struct {
 	PseudoDisk  bool   /*Indicates whether pseudo or physical disk */
 	VTDisk      bool   /* 1- Virtual Target Disk, 0 - Others */
 }
+
+type DiskPath struct {
+	Name      string /* name of the path */
+	XRate     int64  /* __rxfers: number of reads via the path */
+	Xfers     int64  /* number of transfers via the path */
+	Rblks     int64  /* 512 bytes blocks written via the path */
+	Wblks     int64  /* 512 bytes blocks read via the path  */
+	Time      int64  /* amount of time disks are active */
+	Adapter   string /* disk adapter name (from ODM) */
+	QFull     int64  /* "service" queue full occurrence count (number of times the disk is not accepting any more request) */
+	Rserv     int64  /* read or receive service time */
+	RTimeOut  int64  /* number of read request timeouts */
+	Rfailed   int64  /* number of failed read requests */
+	MinRserv  int64  /* min read or receive service time */
+	MaxRserv  int64  /* max read or receive service time */
+	Wserv     int64  /* write or send service time */
+	WTimeOut  int64  /* number of write request timeouts */
+	Wfailed   int64  /* number of failed write requests */
+	MinWserv  int64  /* min write or send service time */
+	MaxWserv  int64  /* max write or send service time */
+	WqDepth   int64  /* instantaneous wait queue depth (number of requests waiting to be sent to disk) */
+	WqSampled int64  /* accumulated sampled dk_wq_depth */
+	WqTime    int64  /* accumulated wait queueing time */
+	WqMinTime int64  /* min wait queueing time */
+	WqMaxTime int64  /* max wait queueing time */
+	QSampled  int64  /* accumulated sampled dk_q_depth */
+	Version   int64  /* version number (1, 2, etc.,)   */
+}

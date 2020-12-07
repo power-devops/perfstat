@@ -75,3 +75,29 @@ func DiskStat() ([]Disk, error) {
 	}
 	return d, nil
 }
+
+func DiskPathStat() ([]DiskPath, error) {
+	var diskpath *C.perfstat_diskpath_t
+	var pathname C.perfstat_id_t
+
+	numpaths := C.perfstat_diskpath(nil, nil, C.sizeof_perfstat_diskpath_t, 0)
+	if numpaths <= 0 {
+		return nil, fmt.Errorf("perfstat_diskpath() error")
+	}
+
+	path_len := C.sizeof_perfstat_diskpath_t * C.ulong(numpaths)
+	diskpath = (*C.perfstat_diskpath_t)(C.malloc(path_len))
+	C.strcpy(&pathname.name[0], C.CString(C.FIRST_DISKPATH))
+	r := C.perfstat_diskpath(&pathname, diskpath, C.sizeof_perfstat_diskpath_t, numpaths)
+	if r < 0 {
+		return nil, fmt.Errorf("perfstat_diskpath() error")
+	}
+	d := make([]DiskPath, r)
+	for i := 0; i < int(r); i++ {
+		p := C.get_diskpath_stat(diskpath, C.int(i))
+		if p != nil {
+			d[i] = perfstatdiskpath2diskpath(p)
+		}
+	}
+	return d, nil
+}

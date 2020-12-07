@@ -445,3 +445,35 @@ func perfstatdisk2disk(n *C.perfstat_disk_t) Disk {
 
 	return d
 }
+
+func perfstatdiskpath2diskpath(n *C.perfstat_diskpath_t) DiskPath {
+	var d DiskPath
+
+	d.Name = C.GoString(&n.name[0])
+	d.XRate = int64(n.xrate)
+	d.Xfers = int64(n.xfers)
+	d.Rblks = int64(n.rblks)
+	d.Wblks = int64(n.wblks)
+	d.Time = int64(n.time)
+	d.Adapter = C.GoString(&n.adapter[0])
+	d.QFull = int64(n.q_full)
+	d.Rserv = int64(n.rserv)
+	d.RTimeOut = int64(n.rtimeout)
+	d.Rfailed = int64(n.rfailed)
+	d.MinRserv = int64(n.min_rserv)
+	d.MaxRserv = int64(n.max_rserv)
+	d.Wserv = int64(n.wserv)
+	d.WTimeOut = int64(n.wtimeout)
+	d.Wfailed = int64(n.wfailed)
+	d.MinWserv = int64(n.min_wserv)
+	d.MaxWserv = int64(n.max_wserv)
+	d.WqDepth = int64(n.wq_depth)
+	d.WqSampled = int64(n.wq_sampled)
+	d.WqTime = int64(n.wq_time)
+	d.WqMinTime = int64(n.wq_min_time)
+	d.WqMaxTime = int64(n.wq_max_time)
+	d.QSampled = int64(n.q_sampled)
+	d.Version = int64(n.version)
+
+	return d
+}

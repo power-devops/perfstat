@@ -21,3 +21,9 @@ perfstat_disk_t *get_disk_stat(perfstat_disk_t *disk, int n) {
 
 	return &(disk[n]);
 }
+
+perfstat_diskpath_t *get_diskpath_stat(perfstat_diskpath_t *disk, int n) {
+	if (!disk) return NULL;
+
+	return &(disk[n]);
+}
