@@ -25,3 +25,40 @@ type DiskTotal struct {
 	WqMinTime int64 /* min wait queueing time */
 	WqMaxTime int64 /* max wait queueing time */
 }
+
+// Disk Adapter Types
+const (
+	DA_SCSI  = 0 /* 0 ==> SCSI, SAS, other legacy adapter types */
+	DA_VSCSI     /* 1 ==> Virtual SCSI/SAS Adapter */
+	DA_FCA       /* 2 ==> Fiber Channel Adapter */
+)
+
+type DiskAdapter struct {
+	Name        string /* name of the adapter (from ODM) */
+	Description string /* adapter description (from ODM) */
+	Number      int32  /* number of disks connected to adapter */
+	Size        int64  /* total size of all disks (in MB)  */
+	Free        int64  /* free portion of all disks (in MB)  */
+	XRate       int64  /* __rxfers: total number of reads via adapter */
+	Xfers       int64  /* total number of transfers via adapter */
+	Rblks       int64  /* 512 bytes blocks written via adapter */
+	Wblks       int64  /* 512 bytes blocks read via adapter  */
+	Time        int64  /* amount of time disks are active */
+	Version     int64  /* version number (1, 2, etc.,) */
+	AdapterType int64  /* 0 ==> SCSI, SAS, other legacy adapter types, 1 ==> Virtual SCSI/SAS Adapter, 2 ==> Fiber Channel Adapter */
+	DkBSize     int64  /* Number of Bytes in a block for this disk*/
+	DkRxfers    int64  /* Number of transfers from disk */
+	DkRserv     int64  /* read or receive service time */
+	DkWserv     int64  /* write or send service time */
+	MinRserv    int64  /* Minimum read service time */
+	MaxRserv    int64  /* Maximum read service time */
+	MinWserv    int64  /* Minimum Write service time */
+	MaxWserv    int64  /* Maximum write service time */
+	WqDepth     int64  /* driver wait queue depth */
+	WqSampled   int64  /* accumulated sampled dk_wq_depth */
+	WqTime      int64  /* accumulated wait queueing time */
+	WqMinTime   int64  /* minimum wait queueing time */
+	WqMaxTime   int64  /* maximum wait queueing time */
+	QFull       int64  /* "Service" queue full occurrence count (number of times the adapter/devices connected to the adapter is not accepting any more request) */
+	QSampled    int64  /* accumulated sampled */
+}
