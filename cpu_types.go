@@ -77,25 +77,25 @@ type CPU struct {
 }
 
 type CPUTotal struct {
-	NCpus       int    /* number of active logical processors */
-	NCpusCfg    int    /* number of configured processors */
-	Description string /* processor description (type/official name) */
-	ProcessorHz int64  /* processor speed in Hz */
-	User        int64  /*  raw total number of clock ticks spent in user mode */
-	Sys         int64  /* raw total number of clock ticks spent in system mode */
-	Idle        int64  /* raw total number of clock ticks spent idle */
-	Wait        int64  /* raw total number of clock ticks spent waiting for I/O */
-	PSwitch     int64  /* number of process switches (change in currently running process) */
-	Syscall     int64  /* number of system calls executed */
-	Sysread     int64  /* number of read system calls executed */
-	Syswrite    int64  /* number of write system calls executed */
-	Sysfork     int64  /* number of forks system calls executed */
-	Sysexec     int64  /* number of execs system calls executed */
-	Readch      int64  /* number of characters tranferred with read system call */
-	Writech     int64  /* number of characters tranferred with write system call */
-	DevIntrs    int64  /* number of device interrupts */
-	SoftIntrs   int64  /* number of software interrupts */
-	Lbolt       int64  /* number of ticks since last reboot */
+	NCpus       int     /* number of active logical processors */
+	NCpusCfg    int     /* number of configured processors */
+	Description string  /* processor description (type/official name) */
+	ProcessorHz int64   /* processor speed in Hz */
+	User        int64   /*  raw total number of clock ticks spent in user mode */
+	Sys         int64   /* raw total number of clock ticks spent in system mode */
+	Idle        int64   /* raw total number of clock ticks spent idle */
+	Wait        int64   /* raw total number of clock ticks spent waiting for I/O */
+	PSwitch     int64   /* number of process switches (change in currently running process) */
+	Syscall     int64   /* number of system calls executed */
+	Sysread     int64   /* number of read system calls executed */
+	Syswrite    int64   /* number of write system calls executed */
+	Sysfork     int64   /* number of forks system calls executed */
+	Sysexec     int64   /* number of execs system calls executed */
+	Readch      int64   /* number of characters tranferred with read system call */
+	Writech     int64   /* number of characters tranferred with write system call */
+	DevIntrs    int64   /* number of device interrupts */
+	SoftIntrs   int64   /* number of software interrupts */
+	Lbolt       int64   /* number of ticks since last reboot */
 	LoadAvg1    float32 /* (1<<SBITS) times the average number of runnables processes during the last 1, 5 and 15 minutes.    */
 	LoadAvg5    float32 /* (1<<SBITS) times the average number of runnables processes during the last 1, 5 and 15 minutes.    */
 	LoadAvg15   float32 /* (1<<SBITS) times the average number of runnables processes during the last 1, 5 and 15 minutes.    */

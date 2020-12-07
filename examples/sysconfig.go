@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"golang.org/x/sys/unix"
 	"github.com/power-devops/perfstat"
+	"golang.org/x/sys/unix"
 )
 
 func main() {
