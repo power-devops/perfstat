@@ -518,3 +518,41 @@ func perfstatfcstat2fcadapter(n *C.perfstat_fcstat_t) FCAdapter {
 
 	return f
 }
+
+func perfstatlogicalvolume2logicalvolume(n *C.perfstat_logicalvolume_t) LogicalVolume {
+	var l LogicalVolume
+
+	l.Name = C.GoString(&n.name[0])
+	l.VGName = C.GoString(&n.vgname[0])
+	l.OpenClose = int64(n.open_close)
+	l.State = int64(n.state)
+	l.MirrorPolicy = int64(n.mirror_policy)
+	l.MirrorWriteConsistency = int64(n.mirror_write_consistency)
+	l.WriteVerify = int64(n.write_verify)
+	l.PPsize = int64(n.ppsize)
+	l.LogicalPartitions = int64(n.logical_partitions)
+	l.Mirrors = int32(n.mirrors)
+	l.IOCnt = int64(n.iocnt)
+	l.KBReads = int64(n.kbreads)
+	l.KBWrites = int64(n.kbwrites)
+	l.Version = int64(n.version)
+
+	return l
+}
+
+func perfstatvolumegroup2volumegroup(n *C.perfstat_volumegroup_t) VolumeGroup {
+	var v VolumeGroup
+
+	v.Name = C.GoString(&n.name[0])
+	v.TotalDisks = int64(n.total_disks)
+	v.ActiveDisks = int64(n.active_disks)
+	v.TotalLogicalVolumes = int64(n.total_logical_volumes)
+	v.OpenedLogicalVolumes = int64(n.opened_logical_volumes)
+	v.IOCnt = int64(n.iocnt)
+	v.KBReads = int64(n.kbreads)
+	v.KBWrites = int64(n.kbwrites)
+	v.Version = int64(n.version)
+	v.VariedState = int(n.variedState)
+
+	return v
+}

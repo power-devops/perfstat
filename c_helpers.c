@@ -33,3 +33,15 @@ perfstat_fcstat_t *get_fcadapter_stat(perfstat_fcstat_t *fca, int n) {
 
 	return &(fca[n]);
 }
+
+perfstat_logicalvolume_t *get_logicalvolume_stat(perfstat_logicalvolume_t *lv, int n) {
+	if (!lv) return NULL;
+
+	return &(lv[n]);
+}
+
+perfstat_volumegroup_t *get_volumegroup_stat(perfstat_volumegroup_t *vg, int n) {
+	if (!vg) return NULL;
+
+	return &(vg[n]);
+}
