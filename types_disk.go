@@ -126,3 +126,50 @@ type DiskPath struct {
 	QSampled  int64  /* accumulated sampled dk_q_depth */
 	Version   int64  /* version number (1, 2, etc.,)   */
 }
+
+const (
+	FC_DOWN = 0 // FC Adapter state is DOWN
+	FC_UP   = 1 // FC Adapter state is UP
+)
+
+const (
+	FCT_FCHBA = 0 // FC type - real Fiber Channel Adapter
+	FCT_VFC   = 1 // FC type - virtual Fiber Channel
+)
+
+type FCAdapter struct {
+	Version                      int64  /* version number (1, 2, etc.,) */
+	Name                         string /* name of the adapter */
+	State                        int32  /* FC Adapter state  UP or DOWN */
+	InputRequests                int64  /* Number of Input Requests*/
+	OutputRequests               int64  /* Number of Output Requests */
+	InputBytes                   int64  /* Number of Input Bytes */
+	OutputBytes                  int64  /* Number of Output Bytes */
+	EffMaxTransfer               int64  /* Adapter's Effective Maximum  Transfer Value */
+	NoDMAResourceCnt             int64  /* Count of DMA failures due to no DMA Resource available */
+	NoCmdResourceCnt             int64  /* Count of failures to allocate a command due to no command resource available */
+	AttentionType                int32  /* Link up or down Indicator */
+	SecondsSinceLastReset        int64  /* Displays the seconds since last reset of the statistics on the adapter */
+	TxFrames                     int64  /* Number of frames transmitted */
+	TxWords                      int64  /* Fiber Channel Kbytes transmitted */
+	RxFrames                     int64  /* Number of Frames Received */
+	RxWords                      int64  /* Fiber Channel Kbytes Received */
+	LIPCount                     int64  /* Count of LIP (Loop Initialization Protocol) Events received in case we have FC-AL */
+	NOSCount                     int64  /* Count of NOS (Not_Operational) Events. This indicates a link failure state. */
+	ErrorFrames                  int64  /* Number of frames received with the CRC Error */
+	DumpedFrames                 int64  /* Number of lost frames */
+	LinkFailureCount             int64  /* Count of Link failures */
+	LossofSyncCount              int64  /* Count of loss of sync */
+	LossofSignal                 int64  /* Count of loss of Signal */
+	PrimitiveSeqProtocolErrCount int64  /* number of times a primitive sequence was in error */
+	InvalidTxWordCount           int64  /* Count of Invalid Transmission words received */
+	InvalidCRCCount              int64  /* Count of CRC Errors in a Received Frame */
+	PortFcId                     int64  /* SCSI Id of the adapter */
+	PortSpeed                    int64  /* Speed of Adapter in GBIT */
+	PortType                     string /* Type of connection. The Possible Values are Fabric, Private Loop, Point-to-Point, unknown */
+	PortWWN                      int64  /* World Wide Port name */
+	PortSupportedSpeed           int64  /* Supported Port Speed in GBIT */
+	AdapterType                  int    /* 0 - Fiber Chanel, 1 - Virtual Fiber Chanel Adapter */
+	VfcName                      string /* name of the Virtual Fiber Chanel(VFC) adapter */
+	ClientPartName               string /* name of the client partition */
+}

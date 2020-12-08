@@ -27,3 +27,9 @@ perfstat_diskpath_t *get_diskpath_stat(perfstat_diskpath_t *disk, int n) {
 
 	return &(disk[n]);
 }
+
+perfstat_fcstat_t *get_fcadapter_stat(perfstat_fcstat_t *fca, int n) {
+	if (!fca) return NULL;
+
+	return &(fca[n]);
+}

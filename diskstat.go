@@ -101,3 +101,29 @@ func DiskPathStat() ([]DiskPath, error) {
 	}
 	return d, nil
 }
+
+func FCAdapterStat() ([]FCAdapter, error) {
+	var fcstat *C.perfstat_fcstat_t
+	var fcname C.perfstat_id_t
+
+	numadpt := C.perfstat_fcstat(nil, nil, C.sizeof_perfstat_fcstat_t, 0)
+	if numadpt <= 0 {
+		return nil, fmt.Errorf("perfstat_fcstat() error")
+	}
+
+	fcstat_len := C.sizeof_perfstat_fcstat_t * C.ulong(numadpt)
+	fcstat = (*C.perfstat_fcstat_t)(C.malloc(fcstat_len))
+	C.strcpy(&fcname.name[0], C.CString(C.FIRST_NETINTERFACE))
+	r := C.perfstat_fcstat(&fcname, fcstat, C.sizeof_perfstat_fcstat_t, numadpt)
+	if r < 0 {
+		return nil, fmt.Errorf("perfstat_fcstat() error")
+	}
+	fca := make([]FCAdapter, r)
+	for i := 0; i < int(r); i++ {
+		f := C.get_fcadapter_stat(fcstat, C.int(i))
+		if f != nil {
+			fca[i] = perfstatfcstat2fcadapter(f)
+		}
+	}
+	return fca, nil
+}

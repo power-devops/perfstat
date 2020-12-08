@@ -477,3 +477,44 @@ func perfstatdiskpath2diskpath(n *C.perfstat_diskpath_t) DiskPath {
 
 	return d
 }
+
+func perfstatfcstat2fcadapter(n *C.perfstat_fcstat_t) FCAdapter {
+	var f FCAdapter
+
+	f.Version = int64(n.version)
+	f.Name = C.GoString(&n.name[0])
+	f.State = int32(n.state)
+	f.InputRequests = int64(n.InputRequests)
+	f.OutputRequests = int64(n.OutputRequests)
+	f.InputBytes = int64(n.InputBytes)
+	f.OutputBytes = int64(n.OutputBytes)
+	f.EffMaxTransfer = int64(n.EffMaxTransfer)
+	f.NoDMAResourceCnt = int64(n.NoDMAResourceCnt)
+	f.NoCmdResourceCnt = int64(n.NoCmdResourceCnt)
+	f.AttentionType = int32(n.AttentionType)
+	f.SecondsSinceLastReset = int64(n.SecondsSinceLastReset)
+	f.TxFrames = int64(n.TxFrames)
+	f.TxWords = int64(n.TxWords)
+	f.RxFrames = int64(n.RxFrames)
+	f.RxWords = int64(n.RxWords)
+	f.LIPCount = int64(n.LIPCount)
+	f.NOSCount = int64(n.NOSCount)
+	f.ErrorFrames = int64(n.ErrorFrames)
+	f.DumpedFrames = int64(n.DumpedFrames)
+	f.LinkFailureCount = int64(n.LinkFailureCount)
+	f.LossofSyncCount = int64(n.LossofSyncCount)
+	f.LossofSignal = int64(n.LossofSignal)
+	f.PrimitiveSeqProtocolErrCount = int64(n.PrimitiveSeqProtocolErrCount)
+	f.InvalidTxWordCount = int64(n.InvalidTxWordCount)
+	f.InvalidCRCCount = int64(n.InvalidCRCCount)
+	f.PortFcId = int64(n.PortFcId)
+	f.PortSpeed = int64(n.PortSpeed)
+	f.PortType = C.GoString(&n.PortType[0])
+	f.PortWWN = int64(n.PortWWN)
+	f.PortSupportedSpeed = int64(n.PortSupportedSpeed)
+	f.AdapterType = int(n.adapter_type)
+	f.VfcName = C.GoString(&n.vfc_name[0])
+	f.ClientPartName = C.GoString(&n.client_part_name[0])
+
+	return f
+}
