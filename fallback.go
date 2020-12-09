@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func EnableLVMStat() {}
+func EnableLVMStat()  {}
 func DisableLVMStat() {}
 
 func CpuStat() ([]CPU, error) {
@@ -151,7 +151,7 @@ func HasNxGzip() bool {
 }
 
 func PksCapable() bool {
-	retun false
+	return false
 }
 
 func PksEnabled() bool {
