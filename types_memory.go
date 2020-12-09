@@ -46,3 +46,56 @@ type MemoryTotal struct {
 	BytesCoalesced        int64 /* The number of bytes of the calling partition.s logical real memory  coalesced because they contained duplicated data */
 	BytesCoalescedMemPool int64 /* number of bytes of logical real memory coalesced because they contained duplicated data in the calling partition.s memory */
 }
+
+type MemoryPage struct {
+	PSize           int64 /* page size in bytes */
+	RealTotal       int64 /* number of real memory frames of this page size */
+	RealFree        int64 /* number of pages on free list */
+	RealPinned      int64 /* number of pages pinned */
+	RealInUse       int64 /* number of pages in use */
+	PgExct          int64 /* number of page faults  */
+	PgIns           int64 /* number of pages paged in */
+	PgOuts          int64 /* number of pages paged out */
+	PgSpIns         int64 /* number of page ins from paging space */
+	PgSpOuts        int64 /* number of page outs from paging space */
+	Scans           int64 /* number of page scans by clock */
+	Cycles          int64 /* number of page replacement cycles */
+	PgSteals        int64 /* number of page steals */
+	NumPerm         int64 /* number of frames used for files */
+	NumPgSp         int64 /* number of pages with allocated paging space */
+	RealSystem      int64 /* number of pages used by system segments. */
+	RealUser        int64 /* number of pages used by non-system segments. */
+	RealProcess     int64 /* number of pages used by process segments. */
+	VirtActive      int64 /* Active virtual pages. */
+	ComprsdTotal    int64 /* Number of pages of this size compressed */
+	ComprsdWsegPgs  int64 /* Number of compressed working storage pages */
+	CPgIns          int64 /* number of page ins of this page size to compressed pool */
+	CPgOuts         int64 /* number of page outs of this page size from compressed pool */
+	CPoolInUse      int64 /* Compressed Size of this page size in Compressed Pool */
+	UCPoolSize      int64 /* Uncompressed Pool size in bytes of this page size */
+	ComprsdWsegSize int64 /* Total size of the compressed working storage pages in the pool */
+	Version         int64 /* version number (1, 2, etc.,) */
+	RealAvail       int64 /* number of pages (in 4KB pages) of memory available without paging out working segments */
+}
+
+// paging space types
+const (
+	LV_PAGING      = 1
+	NFS_PAGING     = 2
+	UNKNOWN_PAGING = 3
+)
+
+type PagingSpace struct {
+	Name      string /* Paging space name */
+	Type      uint8  /* type of paging device (LV_PAGING or NFS_PAGING) */
+	VGName    string /* volume group name */
+	Hostname  string /* host name of paging server */
+	Filename  string /* swap file name on server */
+	LPSize    int64  /* size in number of logical partitions  */
+	MBSize    int64  /* size in megabytes  */
+	MBUsed    int64  /* portion used in megabytes  */
+	IOPending int64  /* number of pending I/O */
+	Active    uint8  /* indicates if active (1 if so, 0 if not) */
+	Automatic uint8  /* indicates if automatic (1 if so, 0 if not) */
+	Version   int64  /* version number (1, 2, etc.,) */
+}

@@ -556,3 +556,191 @@ func perfstatvolumegroup2volumegroup(n *C.perfstat_volumegroup_t) VolumeGroup {
 
 	return v
 }
+
+func perfstatmemorypage2memorypage(n *C.perfstat_memory_page_t) MemoryPage {
+	var m MemoryPage
+
+	m.PSize = int64(n.psize)
+	m.RealTotal = int64(n.real_total)
+	m.RealFree = int64(n.real_free)
+	m.RealPinned = int64(n.real_pinned)
+	m.RealInUse = int64(n.real_inuse)
+	m.PgExct = int64(n.pgexct)
+	m.PgIns = int64(n.pgins)
+	m.PgOuts = int64(n.pgouts)
+	m.PgSpIns = int64(n.pgspins)
+	m.PgSpOuts = int64(n.pgspouts)
+	m.Scans = int64(n.scans)
+	m.Cycles = int64(n.cycles)
+	m.PgSteals = int64(n.pgsteals)
+	m.NumPerm = int64(n.numperm)
+	m.NumPgSp = int64(n.numpgsp)
+	m.RealSystem = int64(n.real_system)
+	m.RealUser = int64(n.real_user)
+	m.RealProcess = int64(n.real_process)
+	m.VirtActive = int64(n.virt_active)
+	m.ComprsdTotal = int64(n.comprsd_total)
+	m.ComprsdWsegPgs = int64(n.comprsd_wseg_pgs)
+	m.CPgIns = int64(n.cpgins)
+	m.CPgOuts = int64(n.cpgouts)
+	m.CPoolInUse = int64(n.cpool_inuse)
+	m.UCPoolSize = int64(n.ucpool_size)
+	m.ComprsdWsegSize = int64(n.comprsd_wseg_size)
+	m.Version = int64(n.version)
+	m.RealAvail = int64(n.real_avail)
+
+	return m
+}
+
+func perfstatnetbuffer2netbuffer(n *C.perfstat_netbuffer_t) NetBuffer {
+	var b NetBuffer
+
+	b.Name = C.GoString(&n.name[0])
+	b.InUse = int64(n.inuse)
+	b.Calls = int64(n.calls)
+	b.Delayed = int64(n.delayed)
+	b.Free = int64(n.free)
+	b.Failed = int64(n.failed)
+	b.HighWatermark = int64(n.highwatermark)
+	b.Freed = int64(n.freed)
+	b.Version = int64(n.version)
+
+	return b
+}
+
+func perfstatnetinterface2netiface(n *C.perfstat_netinterface_t) NetIface {
+	var i NetIface
+
+	i.Name = C.GoString(&n.name[0])
+	i.Description = C.GoString(&n.description[0])
+	i.Type = uint8(n._type)
+	i.MTU = int64(n.mtu)
+	i.IPackets = int64(n.ipackets)
+	i.IBytes = int64(n.ibytes)
+	i.IErrors = int64(n.ierrors)
+	i.OPackets = int64(n.opackets)
+	i.OBytes = int64(n.obytes)
+	i.OErrors = int64(n.oerrors)
+	i.Collisions = int64(n.collisions)
+	i.Bitrate = int64(n.bitrate)
+	i.XmitDrops = int64(n.xmitdrops)
+	i.Version = int64(n.version)
+	i.IfIqDrops = int64(n.if_iqdrops)
+	i.IfArpDrops = int64(n.if_arpdrops)
+
+	return i
+}
+
+func perfstatnetadapter2netadapter(n *C.perfstat_netadapter_t) NetAdapter {
+	var i NetAdapter
+
+	i.Version = int64(n.version)
+	i.Name = C.GoString(&n.name[0])
+	i.TxPackets = int64(n.tx_packets)
+	i.TxBytes = int64(n.tx_bytes)
+	i.TxInterrupts = int64(n.tx_interrupts)
+	i.TxErrors = int64(n.tx_errors)
+	i.TxPacketsDropped = int64(n.tx_packets_dropped)
+	i.TxQueueSize = int64(n.tx_queue_size)
+	i.TxQueueLen = int64(n.tx_queue_len)
+	i.TxQueueOverflow = int64(n.tx_queue_overflow)
+	i.TxBroadcastPackets = int64(n.tx_broadcast_packets)
+	i.TxMulticastPackets = int64(n.tx_multicast_packets)
+	i.TxCarrierSense = int64(n.tx_carrier_sense)
+	i.TxDMAUnderrun = int64(n.tx_DMA_underrun)
+	i.TxLostCTSErrors = int64(n.tx_lost_CTS_errors)
+	i.TxMaxCollisionErrors = int64(n.tx_max_collision_errors)
+	i.TxLateCollisionErrors = int64(n.tx_late_collision_errors)
+	i.TxDeferred = int64(n.tx_deferred)
+	i.TxTimeoutErrors = int64(n.tx_timeout_errors)
+	i.TxSingleCollisionCount = int64(n.tx_single_collision_count)
+	i.TxMultipleCollisionCount = int64(n.tx_multiple_collision_count)
+	i.RxPackets = int64(n.rx_packets)
+	i.RxBytes = int64(n.rx_bytes)
+	i.RxInterrupts = int64(n.rx_interrupts)
+	i.RxErrors = int64(n.rx_errors)
+	i.RxPacketsDropped = int64(n.rx_packets_dropped)
+	i.RxBadPackets = int64(n.rx_bad_packets)
+	i.RxMulticastPackets = int64(n.rx_multicast_packets)
+	i.RxBroadcastPackets = int64(n.rx_broadcast_packets)
+	i.RxCRCErrors = int64(n.rx_CRC_errors)
+	i.RxDMAOverrun = int64(n.rx_DMA_overrun)
+	i.RxAlignmentErrors = int64(n.rx_alignment_errors)
+	i.RxNoResourceErrors = int64(n.rx_noresource_errors)
+	i.RxCollisionErrors = int64(n.rx_collision_errors)
+	i.RxPacketTooShortErrors = int64(n.rx_packet_tooshort_errors)
+	i.RxPacketTooLongErrors = int64(n.rx_packet_toolong_errors)
+	i.RxPacketDiscardedByAdapter = int64(n.rx_packets_discardedbyadapter)
+	i.AdapterType = int32(n.adapter_type)
+
+	return i
+}
+
+func perfstatpagingspace2pagingspace(n *C.perfstat_pagingspace_t) PagingSpace {
+	var i PagingSpace
+
+	i.Name = C.GoString(&n.name[0])
+	i.Type = uint8(n._type)
+	i.VGName = C.GoString(C.get_ps_vgname(n))
+	i.Hostname = C.GoString(C.get_ps_hostname(n))
+	i.Filename = C.GoString(C.get_ps_filename(n))
+	i.LPSize = int64(n.lp_size)
+	i.MBSize = int64(n.mb_size)
+	i.MBUsed = int64(n.mb_used)
+	i.IOPending = int64(n.io_pending)
+	i.Active = uint8(n.active)
+	i.Automatic = uint8(n.automatic)
+	i.Version = int64(n.version)
+
+	return i
+}
+
+func perfstatprocess2process(n *C.perfstat_process_t) Process {
+	var i Process
+
+	i.Version = int64(n.version)
+	i.PID = int64(n.pid)
+	i.ProcessName = C.GoString(&n.proc_name[0])
+	i.Priority = int32(n.proc_priority)
+	i.NumThreads = int64(n.num_threads)
+	i.UID = int64(n.proc_uid)
+	i.ClassID = int64(n.proc_classid)
+	i.Size = int64(n.proc_size)
+	i.RealMemData = int64(n.proc_real_mem_data)
+	i.RealMemText = int64(n.proc_real_mem_text)
+	i.VirtMemData = int64(n.proc_virt_mem_data)
+	i.VirtMemText = int64(n.proc_virt_mem_text)
+	i.SharedLibDataSize = int64(n.shared_lib_data_size)
+	i.HeapSize = int64(n.heap_size)
+	i.RealInUse = int64(n.real_inuse)
+	i.VirtInUse = int64(n.virt_inuse)
+	i.Pinned = int64(n.pinned)
+	i.PgSpInUse = int64(n.pgsp_inuse)
+	i.FilePages = int64(n.filepages)
+	i.RealInUseMap = int64(n.real_inuse_map)
+	i.VirtInUseMap = int64(n.virt_inuse_map)
+	i.PinnedInUseMap = int64(n.pinned_inuse_map)
+	i.UCpuTime = float64(n.ucpu_time)
+	i.SCpuTime = float64(n.scpu_time)
+	i.LastTimeBase = int64(n.last_timebase)
+	i.InBytes = int64(n.inBytes)
+	i.OutBytes = int64(n.outBytes)
+	i.InOps = int64(n.inOps)
+	i.OutOps = int64(n.outOps)
+
+	return i
+}
+
+func perfstatthread2thread(n *C.perfstat_thread_t) Thread {
+	var i Thread
+
+	i.TID = int64(n.tid)
+	i.PID = int64(n.pid)
+	i.CpuID = int64(n.cpuid)
+	i.UCpuTime = float64(n.ucpu_time)
+	i.SCpuTime = float64(n.scpu_time)
+	i.LastTimeBase = int64(n.last_timebase)
+	i.Version = int64(n.version)
+
+	return i
+}

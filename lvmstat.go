@@ -10,7 +10,7 @@ package perfstat
 import "C"
 
 import (
-        "fmt"
+	"fmt"
 )
 
 func LogicalVolumeStat() ([]LogicalVolume, error) {

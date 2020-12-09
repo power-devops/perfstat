@@ -2,10 +2,10 @@ package main
 
 import (
 	"flag"
-        "fmt"
+	"fmt"
 	"time"
 
-        "github.com/power-devops/perfstat"
+	"github.com/power-devops/perfstat"
 )
 
 func main() {
@@ -27,18 +27,18 @@ func main() {
 			delta_xfers := da[i].Xfers - da_prev[i].Xfers
 			delta_xrate := da[i].XRate - da_prev[i].XRate
 			avg_rps := int64(0)
-			if da[i].XRate - da_prev[i].XRate != 0 {
+			if da[i].XRate-da_prev[i].XRate != 0 {
 				avg_rps = delta_read / (da[i].XRate - da_prev[i].XRate)
 			}
 			avg_wps := int64(0)
-			if delta_xfers - delta_xrate != 0 {
+			if delta_xfers-delta_xrate != 0 {
 				avg_wps = delta_write / (delta_xfers - delta_xrate)
 			}
-			fmt.Printf("%-8s %7d %8v %8v %8v %8v\n", 
-				da[i].Name, 
+			fmt.Printf("%-8s %7d %8v %8v %8v %8v\n",
+				da[i].Name,
 				da[i].Number,
-				da[i].Size, 
-				da[i].Free, 
+				da[i].Size,
+				da[i].Free,
 				avg_rps,
 				avg_wps)
 		}

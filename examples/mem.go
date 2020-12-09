@@ -23,4 +23,15 @@ func main() {
 	fmt.Printf("number of paging space page outs : %v\n", minfo.PgSpOut)
 	fmt.Printf("number of page ins               : %v\n", minfo.PageIn)
 	fmt.Printf("number of page outs              : %v\n", minfo.PageOut)
+	fmt.Println()
+	psinfo, _ := perfstat.PagingSpaceStat()
+	for i := range psinfo {
+		fmt.Printf("Statistics for paging space : %s\n", psinfo[i].Name)
+		fmt.Printf("------------------------------\n")
+		fmt.Printf("Type                       : %v\n", psinfo[i].Type)
+		fmt.Printf("Volume group               : %v\n", psinfo[i].VGName)
+		fmt.Printf("Size in logical partitions : %v\n", psinfo[i].LPSize)
+		fmt.Printf("Size in MB                 : %v\n", psinfo[i].MBSize)
+		fmt.Printf("Used in MB                 : %v\n", psinfo[i].MBUsed)
+	}
 }
