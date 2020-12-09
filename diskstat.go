@@ -120,7 +120,7 @@ func FCAdapterStat() ([]FCAdapter, error) {
 	}
 	fca := make([]FCAdapter, r)
 	for i := 0; i < int(r); i++ {
-		f := C.get_fcadapter_stat(fcstat, C.int(i))
+		f := C.get_fcstat_stat(fcstat, C.int(i))
 		if f != nil {
 			fca[i] = perfstatfcstat2fcadapter(f)
 		}

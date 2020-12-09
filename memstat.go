@@ -43,7 +43,7 @@ func MemoryPageStat() ([]MemoryPage, error) {
 	}
 	ps := make([]MemoryPage, r)
 	for i := 0; i < int(r); i++ {
-		p := C.get_memorypage_stat(mempage, C.int(i))
+		p := C.get_memory_page_stat(mempage, C.int(i))
 		if p != nil {
 			ps[i] = perfstatmemorypage2memorypage(p)
 		}
