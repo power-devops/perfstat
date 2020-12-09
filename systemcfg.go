@@ -1,3 +1,5 @@
+// +build aix
+
 package perfstat
 
 import "golang.org/x/sys/unix"
