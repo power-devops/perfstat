@@ -417,6 +417,7 @@ func perfstatdisk2disk(n *C.perfstat_disk_t) Disk {
 	d.Size = int64(n.size)
 	d.Free = int64(n.free)
 	d.BSize = int64(n.bsize)
+	d.XRate = int64(n.xrate)
 	d.Xfers = int64(n.xfers)
 	d.Wblks = int64(n.wblks)
 	d.Rblks = int64(n.rblks)

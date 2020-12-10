@@ -70,6 +70,7 @@ type Disk struct {
 	Size        int64  /* size of the disk (in MB) */
 	Free        int64  /* free portion of the disk (in MB) */
 	BSize       int64  /* disk block size (in bytes) */
+	XRate       int64  /* number of transfers from disk */
 	Xfers       int64  /* number of transfers to/from disk */
 	Wblks       int64  /* number of blocks written to disk */
 	Rblks       int64  /* number of blocks read from disk */
