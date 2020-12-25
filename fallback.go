@@ -265,3 +265,11 @@ func EcoCapable() bool {
 func EcoEnabled() bool {
 	return false
 }
+
+func BootTime() (uint64, error) {
+	return 0, fmt.Errorf("Not implemented")
+}
+
+func UptimeSeconds() (uint64, error) {
+	return 0, fmt.Errorf("Not implemented")
+}

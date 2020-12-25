@@ -30,3 +30,15 @@ char *get_ps_filename(perfstat_pagingspace_t *ps) {
 char *get_ps_vgname(perfstat_pagingspace_t *ps) {
 	return ps->u.lv_paging.vgname;
 }
+
+time_t boottime()
+{
+        register struct utmpx *utmp;
+
+        while ( (utmp = getutxent()) != NULL ) {
+                if (utmp->ut_type == BOOT_TIME) {
+                        return utmp->ut_tv.tv_sec;
+                }
+        }
+        return -1;
+}

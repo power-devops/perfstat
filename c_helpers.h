@@ -2,6 +2,7 @@
 #define C_HELPERS_H
 
 #include <libperfstat.h>
+#include <utmpx.h>
 
 #define GETFUNC(TYPE) perfstat_##TYPE##_t *get_##TYPE##_stat(perfstat_##TYPE##_t *b, int n) { \
         if (!b) return NULL; \
@@ -29,5 +30,6 @@ extern double get_partition_mhz(perfstat_partition_config_t);
 extern char *get_ps_hostname(perfstat_pagingspace_t *);
 extern char *get_ps_filename(perfstat_pagingspace_t *);
 extern char *get_ps_vgname(perfstat_pagingspace_t *);
+extern time_t boottime();
 
 #endif
