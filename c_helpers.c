@@ -35,10 +35,13 @@ time_t boottime()
 {
         register struct utmpx *utmp;
 
+	setutxent();
         while ( (utmp = getutxent()) != NULL ) {
                 if (utmp->ut_type == BOOT_TIME) {
+			endutxent();
                         return utmp->ut_tv.tv_sec;
                 }
         }
+	endutxent();
         return -1;
 }
