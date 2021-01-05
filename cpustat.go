@@ -20,11 +20,6 @@ import (
 	"unsafe"
 )
 
-// CpuStat() returns array of CPU structures with information about
-// logical CPUs on the system.
-// IBM documentation:
-//   * https://www.ibm.com/support/knowledgecenter/ssw_aix_72/performancetools/idprftools_perfstat_int_cpu.html
-//   * https://www.ibm.com/support/knowledgecenter/en/ssw_aix_72/p_bostechref/perfstat_cpu.html
 func CpuStat() ([]CPU, error) {
 	var cpustat *C.perfstat_cpu_t
 	var cpu C.perfstat_id_t
@@ -49,10 +44,6 @@ func CpuStat() ([]CPU, error) {
 	return c, nil
 }
 
-// CpuTotalStat() returns general information about CPUs on the system.
-// IBM documentation:
-//   * https://www.ibm.com/support/knowledgecenter/ssw_aix_72/performancetools/idprftools_perfstat_glob_cpu.html
-//   * https://www.ibm.com/support/knowledgecenter/en/ssw_aix_72/p_bostechref/perfstat_cputot.html
 func CpuTotalStat() (*CPUTotal, error) {
 	var cpustat *C.perfstat_cpu_total_t
 
@@ -66,10 +57,6 @@ func CpuTotalStat() (*CPUTotal, error) {
 	return &c, nil
 }
 
-// CpuUtilStat() calculates CPU utilization.
-// IBM documentation:
-//   * https://www.ibm.com/support/knowledgecenter/ssw_aix_72/performancetools/idprftools_perfstat_cpu_util.html
-//   * https://www.ibm.com/support/knowledgecenter/en/ssw_aix_72/p_bostechref/perfstat_cpu_util.html
 func CpuUtilStat(intvl time.Duration) (*CPUUtil, error) {
 	var cpuutil *C.perfstat_cpu_util_t
 	var newt *C.perfstat_cpu_total_t
