@@ -44,3 +44,110 @@ time_t boottime()
 	endutxent();
         return -1;
 }
+
+struct fsinfo *get_filesystem_stat(struct fsinfo *fs_all, int n) {
+	if (!fs_all) return NULL;
+	return &(fs_all[n]);
+}
+
+int get_mounts(struct vmount **vmountpp) {
+        int size;
+        struct vmount *vm;
+        int nmounts;
+
+        size = BUFSIZ;
+
+        while (1) {
+                if ((vm = (struct vmount *)malloc((size_t)size)) == NULL) {
+                        perror("malloc failed");
+                        exit(-1);
+                }
+                if ((nmounts = mntctl(MCTL_QUERY, size, (caddr_t)vm)) > 0) {
+                        *vmountpp = vm;
+                        return nmounts;
+                } else if (nmounts == 0) {
+                        size = *(int *)vm;
+                        free((void *)vm);
+                } else {
+                        free((void *)vm);
+                        return -1;
+                }
+        }
+}
+
+void fill_fsinfo(struct statfs statbuf, struct fsinfo *fs) {
+        fsblkcnt_t freeblks, totblks, usedblks;
+        fsblkcnt_t tinodes, ninodes, ifree;
+        uint    cfactor;
+
+        if (statbuf.f_blocks == -1) {
+                fs->totalblks = 0;
+                fs->freeblks = 0;
+                fs->totalinodes = 0;
+                fs->freeinodes = 0;
+                return;
+        }
+
+        cfactor = statbuf.f_bsize / 512;
+        fs->freeblks = statbuf.f_bavail * cfactor;
+        fs->totalblks = statbuf.f_blocks * cfactor;
+
+        fs->freeinodes = statbuf.f_ffree;
+        fs->totalinodes = statbuf.f_files;
+
+        if (fs->freeblks < 0)
+                fs->freeblks = 0;
+}
+
+int getfsinfo(char *fsname, char *devname, char *host, char *options, struct fsinfo *fs) {
+        struct statfs statbuf;
+        char buf[BUFSIZ];
+        char *p;
+
+        if (fs == NULL) {
+                return 1;
+        }
+
+        for (p = strtok(options, ","); p != NULL; p = strtok(NULL, ","))
+                if (strcmp(p, "ignore") == 0)
+                        return 0;
+
+        if (*host != 0 && strcmp(host, "-") != 0) {
+                sprintf(buf, "%s:%s", host, devname);
+                devname = buf;
+        }
+        fs->devname = (char *)calloc(strlen(devname)+1, 1);
+        fs->fsname = (char *)calloc(strlen(fsname)+1, 1);
+        strncpy(fs->devname, devname, strlen(devname));
+        strncpy(fs->fsname, fsname, strlen(fsname));
+
+        if (statfs(fsname,&statbuf) < 0) {
+                return 1;
+        }
+
+        fill_fsinfo(statbuf, fs);
+        return 0;
+}
+
+struct fsinfo *get_all_fs(int *rc) {
+        struct vmount *mnt;
+        struct fsinfo *fs_all;
+        int nmounts;
+
+        *rc = -1;
+        if ((nmounts = get_mounts(&mnt)) <= 0) {
+                perror("Can't get mount table info");
+                return NULL;
+        }
+
+        fs_all = (struct fsinfo *)calloc(sizeof(struct fsinfo), nmounts);
+        while ((*rc)++, nmounts--) {
+                getfsinfo(vmt2dataptr(mnt, VMT_STUB),
+                          vmt2dataptr(mnt, VMT_OBJECT),
+                          vmt2dataptr(mnt, VMT_HOST),
+                          vmt2dataptr(mnt, VMT_ARGS),
+                          &fs_all[*rc]);
+                mnt = (struct vmount *)((char *)mnt + mnt->vmt_length);
+        }
+        return fs_all;
+}

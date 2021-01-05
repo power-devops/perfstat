@@ -747,3 +747,16 @@ func perfstatthread2thread(n *C.perfstat_thread_t) Thread {
 
 	return i
 }
+
+func fsinfo2filesystem(n *C.struct_fsinfo) FileSystem {
+	var i FileSystem
+
+	i.Device = C.GoString(n.devname)
+	i.MountPoint = C.GoString(n.fsname)
+	i.TotalBlocks = int64(n.totalblks)
+	i.FreeBlocks = int64(n.freeblks)
+	i.TotalInodes = int64(n.totalinodes)
+	i.FreeInodes = int64(n.freeinodes)
+
+	return i
+}

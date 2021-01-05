@@ -14,4 +14,3 @@ For documentation of perfstat on AIX and using it in programs refer to the offic
 https://www.ibm.com/support/knowledgecenter/ssw_aix_72/performancetools/idprftools_perfstat.html
 */
 package perfstat
-

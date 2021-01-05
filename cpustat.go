@@ -21,7 +21,7 @@ import (
 )
 
 // CpuStat() returns array of CPU structures with information about
-// logical CPUs on the system. 
+// logical CPUs on the system.
 // IBM documentation:
 //   * https://www.ibm.com/support/knowledgecenter/ssw_aix_72/performancetools/idprftools_perfstat_int_cpu.html
 //   * https://www.ibm.com/support/knowledgecenter/en/ssw_aix_72/p_bostechref/perfstat_cpu.html
