@@ -7,6 +7,7 @@ package perfstat
 
 #include <libperfstat.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "c_helpers.h"
 */
@@ -14,6 +15,7 @@ import "C"
 
 import (
 	"fmt"
+	"unsafe"
 )
 
 func ProcessStat() ([]Process, error) {
@@ -27,6 +29,7 @@ func ProcessStat() ([]Process, error) {
 
 	plen := C.sizeof_perfstat_process_t * C.ulong(numproc)
 	proc = (*C.perfstat_process_t)(C.malloc(plen))
+	defer C.free(unsafe.Pointer(proc))
 	C.strcpy(&first.name[0], C.CString(""))
 	r := C.perfstat_process(&first, proc, C.sizeof_perfstat_process_t, numproc)
 	if r < 0 {
@@ -54,6 +57,7 @@ func ThreadStat() ([]Thread, error) {
 
 	thlen := C.sizeof_perfstat_thread_t * C.ulong(numthr)
 	thread = (*C.perfstat_thread_t)(C.malloc(thlen))
+	defer C.free(unsafe.Pointer(thread))
 	C.strcpy(&first.name[0], C.CString(""))
 	r := C.perfstat_thread(&first, thread, C.sizeof_perfstat_thread_t, numthr)
 	if r < 0 {

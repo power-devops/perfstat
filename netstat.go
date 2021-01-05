@@ -7,6 +7,7 @@ package perfstat
 
 #include <libperfstat.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "c_helpers.h"
 */
@@ -14,6 +15,7 @@ import "C"
 
 import (
 	"fmt"
+	"unsafe"
 )
 
 func NetIfaceTotalStat() (*NetIfaceTotal, error) {
@@ -38,6 +40,7 @@ func NetBufferStat() ([]NetBuffer, error) {
 
 	nblen := C.sizeof_perfstat_netbuffer_t * C.ulong(numbuf)
 	nbuf = (*C.perfstat_netbuffer_t)(C.malloc(nblen))
+	defer C.free(unsafe.Pointer(nbuf))
 	C.strcpy(&first.name[0], C.CString(C.FIRST_NETBUFFER))
 	r := C.perfstat_netbuffer(&first, nbuf, C.sizeof_perfstat_netbuffer_t, numbuf)
 	if r < 0 {
@@ -67,6 +70,7 @@ func NetIfaceStat() ([]NetIface, error) {
 
 	iflen := C.sizeof_perfstat_netinterface_t * C.ulong(numif)
 	nif = (*C.perfstat_netinterface_t)(C.malloc(iflen))
+	defer C.free(unsafe.Pointer(nif))
 	C.strcpy(&first.name[0], C.CString(C.FIRST_NETINTERFACE))
 	r := C.perfstat_netinterface(&first, nif, C.sizeof_perfstat_netinterface_t, numif)
 	if r < 0 {
@@ -96,6 +100,7 @@ func NetAdapterStat() ([]NetAdapter, error) {
 
 	adplen := C.sizeof_perfstat_netadapter_t * C.ulong(numad)
 	adapters = (*C.perfstat_netadapter_t)(C.malloc(adplen))
+	defer C.free(unsafe.Pointer(adapters))
 	C.strcpy(&first.name[0], C.CString(C.FIRST_NETINTERFACE))
 	r := C.perfstat_netadapter(&first, adapters, C.sizeof_perfstat_netadapter_t, numad)
 	if r < 0 {

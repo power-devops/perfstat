@@ -7,6 +7,7 @@ package perfstat
 
 #include <libperfstat.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "c_helpers.h"
 */
@@ -14,6 +15,7 @@ import "C"
 
 import (
 	"fmt"
+	"unsafe"
 )
 
 func MemoryTotalStat() (*MemoryTotal, error) {
@@ -38,6 +40,7 @@ func MemoryPageStat() ([]MemoryPage, error) {
 
 	mp_len := C.sizeof_perfstat_memory_page_t * C.ulong(numps)
 	mempage = (*C.perfstat_memory_page_t)(C.malloc(mp_len))
+	defer C.free(unsafe.Pointer(mempage))
 	fps.psize = C.FIRST_PSIZE
 	r := C.perfstat_memory_page(&fps, mempage, C.sizeof_perfstat_memory_page_t, numps)
 	if r < 1 {
@@ -64,6 +67,7 @@ func PagingSpaceStat() ([]PagingSpace, error) {
 
 	ps_len := C.sizeof_perfstat_pagingspace_t * C.ulong(numps)
 	pspace = (*C.perfstat_pagingspace_t)(C.malloc(ps_len))
+	defer C.free(unsafe.Pointer(pspace))
 	C.strcpy(&fps.name[0], C.CString(C.FIRST_PAGINGSPACE))
 	r := C.perfstat_pagingspace(&fps, pspace, C.sizeof_perfstat_pagingspace_t, numps)
 	if r < 1 {
