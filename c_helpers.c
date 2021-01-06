@@ -99,8 +99,10 @@ void fill_fsinfo(struct statfs statbuf, struct fsinfo *fs) {
                 fs->freeblks = 0;
 }
 
-int getfsinfo(char *fsname, char *devname, char *host, char *options, struct fsinfo *fs) {
+int getfsinfo(char *fsname, char *devname, char *host, char *options, int flags, int fstype, struct fsinfo *fs) {
         struct statfs statbuf;
+	int devname_size = strlen(devname);
+	int fsname_size = strlen(fsname);
         char buf[BUFSIZ];
         char *p;
 
@@ -116,10 +118,12 @@ int getfsinfo(char *fsname, char *devname, char *host, char *options, struct fsi
                 sprintf(buf, "%s:%s", host, devname);
                 devname = buf;
         }
-        fs->devname = (char *)calloc(strlen(devname)+1, 1);
-        fs->fsname = (char *)calloc(strlen(fsname)+1, 1);
-        strncpy(fs->devname, devname, strlen(devname));
-        strncpy(fs->fsname, fsname, strlen(fsname));
+        fs->devname = (char *)calloc(devname_size+1, 1);
+        fs->fsname = (char *)calloc(fsname_size+1, 1);
+        strncpy(fs->devname, devname, devname_size);
+        strncpy(fs->fsname, fsname, fsname_size);
+	fs->flags = flags;
+	fs->fstype = fstype;
 
         if (statfs(fsname,&statbuf) < 0) {
                 return 1;
@@ -146,6 +150,8 @@ struct fsinfo *get_all_fs(int *rc) {
                           vmt2dataptr(mnt, VMT_OBJECT),
                           vmt2dataptr(mnt, VMT_HOST),
                           vmt2dataptr(mnt, VMT_ARGS),
+			  mnt->vmt_flags,
+			  mnt->vmt_gfstype,
                           &fs_all[*rc]);
                 mnt = (struct vmount *)((char *)mnt + mnt->vmt_length);
         }

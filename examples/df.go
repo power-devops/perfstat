@@ -12,6 +12,9 @@ func main() {
 	for _, fs := range fss {
 		fmt.Printf("===== Filesystem %s =====\n", fs.Device)
 		fmt.Printf("Mounted on       %s\n", fs.MountPoint)
+		fmt.Printf("Filesystem type  %s\n", fs.TypeString())
+		fmt.Printf("Filesystem flags %v\n", fs.Flags)
+		fmt.Printf("Filesystem flags %s\n", fs.FlagsString())
 		fmt.Printf("Total 512 blocks %v\n", fs.TotalBlocks)
 		fmt.Printf("Total Megabytes  %v\n", fs.TotalBlocks*512/1048576)
 		fmt.Printf("Free 512 blocks  %v\n", fs.FreeBlocks)

@@ -753,6 +753,8 @@ func fsinfo2filesystem(n *C.struct_fsinfo) FileSystem {
 
 	i.Device = C.GoString(n.devname)
 	i.MountPoint = C.GoString(n.fsname)
+	i.FSType = int(n.fstype)
+	i.Flags = int(n.flags)
 	i.TotalBlocks = int64(n.totalblks)
 	i.FreeBlocks = int64(n.freeblks)
 	i.TotalInodes = int64(n.totalinodes)

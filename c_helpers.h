@@ -36,6 +36,8 @@ GETFUNC_EXT(volumegroup)
 struct fsinfo {
         char *devname;
         char *fsname;
+	int flags;
+	int fstype;
         unsigned long totalblks;
         unsigned long freeblks;
         unsigned long totalinodes;
@@ -50,7 +52,7 @@ extern time_t boottime();
 struct fsinfo *get_filesystem_stat(struct fsinfo *, int);
 int get_mounts(struct vmount **);
 void fill_statfs(struct statfs, struct fsinfo *);
-int getfsinfo(char *, char *, char *, char *, struct fsinfo *);
+int getfsinfo(char *, char *, char *, char *, int, int, struct fsinfo *);
 struct fsinfo *get_all_fs(int *);
 
 #endif
