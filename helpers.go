@@ -817,4 +817,3 @@ func lparinfo2partinfo(n C.lpar_info_format2_t) PartitionInfo {
 
 	return i
 }
-

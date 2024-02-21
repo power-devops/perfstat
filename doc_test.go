@@ -1,5 +1,7 @@
 //go:build aix
 // +build aix
+
+//
 package perfstat_test
 
 import (

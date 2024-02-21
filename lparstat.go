@@ -13,7 +13,7 @@ import "C"
 
 import (
 	"fmt"
-    "unsafe"
+	"unsafe"
 )
 
 func PartitionStat() (*PartitionConfig, error) {
@@ -38,4 +38,3 @@ func LparInfo() (*PartitionInfo, error) {
 	p := lparinfo2partinfo(pinfo)
 	return &p, nil
 }
-
