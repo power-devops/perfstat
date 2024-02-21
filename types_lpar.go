@@ -67,6 +67,18 @@ type PartitionConfig struct {
 	SubProcessorMode         int32          /* Split core mode, its value can be 0,1,2 or 4. 0 for unsupported, 1 for capable but not enabled, 2 or 4 for enabled*/
 }
 
+const (
+	AME_TYPE_V1           = 0x1
+	AME_TYPE_V2           = 0x2
+	LPAR_INFO_CAPPED      = 0x01 /* Parition Capped */
+	LPAR_INFO_AUTH_PIC    = 0x02 /* Authority granted for poolidle*/
+	LPAR_INFO_SMT_ENABLED = 0x04 /* SMT Enabled */
+	LPAR_INFO_WPAR_ACTIVE = 0x08 /* Process Running Within a WPAR */
+	LPAR_INFO_EXTENDED    = 0x10 /* Extended shared processor pool information */
+	LPAR_INFO_AME_ENABLED = 0x20 /* Active Mem. Expansion (AME) enabled*/
+	LPAR_INFO_SEM_ENABLED = 0x40 /* Speculative Execution Mode enabled */
+)
+
 type PartitionInfo struct {
 	Version               int    /* version for this structure */
 	OnlineMemory          uint64 /* MB of currently online memory */
