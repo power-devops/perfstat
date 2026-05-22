@@ -44,6 +44,21 @@ struct fsinfo {
         unsigned long freeinodes;
 };
 
+/* Conditional getters for perfstat_diskadapter_t fields added in
+ * CURR_VERSION_DISKADAPTER >= 3 (absent on older AIX releases where the macro is 2).
+ * Return 0 on older AIX releases. */
+extern u_longlong_t get_da_min_rserv(perfstat_diskadapter_t *);
+extern u_longlong_t get_da_max_rserv(perfstat_diskadapter_t *);
+extern u_longlong_t get_da_min_wserv(perfstat_diskadapter_t *);
+extern u_longlong_t get_da_max_wserv(perfstat_diskadapter_t *);
+extern u_longlong_t get_da_wq_depth(perfstat_diskadapter_t *);
+extern u_longlong_t get_da_wq_sampled(perfstat_diskadapter_t *);
+extern u_longlong_t get_da_wq_time(perfstat_diskadapter_t *);
+extern u_longlong_t get_da_wq_min_time(perfstat_diskadapter_t *);
+extern u_longlong_t get_da_wq_max_time(perfstat_diskadapter_t *);
+extern u_longlong_t get_da_q_full(perfstat_diskadapter_t *);
+extern u_longlong_t get_da_q_sampled(perfstat_diskadapter_t *);
+
 extern double get_partition_mhz(perfstat_partition_config_t);
 extern char *get_ps_hostname(perfstat_pagingspace_t *);
 extern char *get_ps_filename(perfstat_pagingspace_t *);
