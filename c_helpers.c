@@ -15,6 +15,29 @@ GETFUNC(process)
 GETFUNC(thread)
 GETFUNC(volumegroup)
 
+/* Older AIX releases ship CURR_VERSION_DISKADAPTER=2 and the struct ends at dk_wserv;
+ * these fields were added in version 3+.  The #if guards ensure the code compiles on
+ * both old and new releases, returning 0 for absent fields. */
+#if CURR_VERSION_DISKADAPTER >= 3
+#define GET_DA_FIELD(field) \
+u_longlong_t get_da_##field(perfstat_diskadapter_t *d) { return d->field; }
+#else
+#define GET_DA_FIELD(field) \
+u_longlong_t get_da_##field(perfstat_diskadapter_t *d) { (void)d; return 0; }
+#endif
+
+GET_DA_FIELD(min_rserv)
+GET_DA_FIELD(max_rserv)
+GET_DA_FIELD(min_wserv)
+GET_DA_FIELD(max_wserv)
+GET_DA_FIELD(wq_depth)
+GET_DA_FIELD(wq_sampled)
+GET_DA_FIELD(wq_time)
+GET_DA_FIELD(wq_min_time)
+GET_DA_FIELD(wq_max_time)
+GET_DA_FIELD(q_full)
+GET_DA_FIELD(q_sampled)
+
 double get_partition_mhz(perfstat_partition_config_t pinfo) {
 	return pinfo.processorMHz;
 }
