@@ -255,17 +255,19 @@ func perfstatdiskadapter2diskadapter(n *C.perfstat_diskadapter_t) DiskAdapter {
 	d.DkBSize = int64(n.dk_bsize)
 	d.DkRserv = int64(n.dk_rserv)
 	d.DkWserv = int64(n.dk_wserv)
-	d.MinRserv = int64(n.min_rserv)
-	d.MaxRserv = int64(n.max_rserv)
-	d.MinWserv = int64(n.min_wserv)
-	d.MaxWserv = int64(n.max_wserv)
-	d.WqDepth = int64(n.wq_depth)
-	d.WqSampled = int64(n.wq_sampled)
-	d.WqTime = int64(n.wq_time)
-	d.WqMinTime = int64(n.wq_min_time)
-	d.WqMaxTime = int64(n.wq_max_time)
-	d.QFull = int64(n.q_full)
-	d.QSampled = int64(n.q_sampled)
+	// Fields below were added in CURR_VERSION_DISKADAPTER >= 3; absent on older AIX
+	// releases (version 2). The wrapper returns 0 when the field is not present in the struct.
+	d.MinRserv = int64(C.get_da_min_rserv(n))
+	d.MaxRserv = int64(C.get_da_max_rserv(n))
+	d.MinWserv = int64(C.get_da_min_wserv(n))
+	d.MaxWserv = int64(C.get_da_max_wserv(n))
+	d.WqDepth = int64(C.get_da_wq_depth(n))
+	d.WqSampled = int64(C.get_da_wq_sampled(n))
+	d.WqTime = int64(C.get_da_wq_time(n))
+	d.WqMinTime = int64(C.get_da_wq_min_time(n))
+	d.WqMaxTime = int64(C.get_da_wq_max_time(n))
+	d.QFull = int64(C.get_da_q_full(n))
+	d.QSampled = int64(C.get_da_q_sampled(n))
 
 	return d
 }
