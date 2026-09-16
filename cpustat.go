@@ -17,11 +17,13 @@ import "C"
 import (
 	"fmt"
 	"runtime"
+    "sync"
 	"time"
 	"unsafe"
 )
 
 var old_cpu_total_stat *C.perfstat_cpu_total_t
+var cpuUtilMutex sync.Mutex
 
 func init() {
 	old_cpu_total_stat = (*C.perfstat_cpu_total_t)(C.malloc(C.sizeof_perfstat_cpu_total_t))
@@ -112,6 +114,8 @@ func CpuUtilTotalStat() (*CPUUtil, error) {
 	var new_cpu_total_stat *C.perfstat_cpu_total_t
 	var data C.perfstat_rawdata_t
 
+    cpuUtilMutex.Lock()
+    defer cpuUtilMutex.Unlock()
 	new_cpu_total_stat = (*C.perfstat_cpu_total_t)(C.malloc(C.sizeof_perfstat_cpu_total_t))
 	cpuutil = (*C.perfstat_cpu_util_t)(C.malloc(C.sizeof_perfstat_cpu_util_t))
 	defer C.free(unsafe.Pointer(cpuutil))
