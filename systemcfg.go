@@ -433,7 +433,7 @@ func HasVSX() bool {
 
 func HasDFP() bool {
 	impl := unix.Getsystemcfg(SC_DFP_STAT)
-	if impl > 1 {
+	if impl > 0 {
 		return true
 	}
 	return false
