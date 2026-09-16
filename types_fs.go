@@ -66,68 +66,99 @@ func (f *FileSystem) TypeString() string {
 func (f *FileSystem) FlagsString() string {
 	var flags []string
 
-	if f.Flags&VFS_READONLY != 0:
+	if f.Flags&VFS_READONLY != 0 {
 		flags = append(flags, "ro")
-	if f.Flags&VFS_REMOVABLE != 0:
+    }
+	if f.Flags&VFS_REMOVABLE != 0 {
 		flags = append(flags, "removable")
-	if f.Flags&VFS_DEVMOUNT != 0:
+    }
+	if f.Flags&VFS_DEVMOUNT != 0 {
 		flags = append(flags, "local")
-	if f.Flags&VFS_REMOTE != 0:
+    }
+	if f.Flags&VFS_REMOTE != 0 {
 		flags = append(flags, "remote")
-	if f.Flags&VFS_SYSV_MOUNT != 0:
+    }
+	if f.Flags&VFS_SYSV_MOUNT != 0 {
 		flags = append(flags, "sysv")
-	if f.Flags&VFS_UNMOUNTING != 0:
+    }
+	if f.Flags&VFS_UNMOUNTING != 0 {
 		flags = append(flags, "unmounting")
-	if f.Flags&VFS_NOSUID != 0:
+    }
+	if f.Flags&VFS_NOSUID != 0 {
 		flags = append(flags, "nosuid")
-	if f.Flags&VFS_NODEV != 0:
+    }
+	if f.Flags&VFS_NODEV != 0 {
 		flags = append(flags, "nodev")
-	if f.Flags&VFS_NOINTEG != 0:
+    }
+	if f.Flags&VFS_NOINTEG != 0 {
 		flags = append(flags, "nointeg")
-	if f.Flags&VFS_NOMANAGER != 0:
+    }
+	if f.Flags&VFS_NOMANAGER != 0 {
 		flags = append(flags, "nomanager")
-	if f.Flags&VFS_NOCASE != 0:
+    }
+	if f.Flags&VFS_NOCASE != 0 {
 		flags = append(flags, "nocase")
-	if f.Flags&VFS_UPCASE != 0:
+    }
+	if f.Flags&VFS_UPCASE != 0 {
 		flags = append(flags, "upcase")
-	if f.Flags&VFS_NBC != 0:
+    }
+	if f.Flags&VFS_NBC != 0 {
 		flags = append(flags, "nbc")
-	if f.Flags&VFS_MIND != 0:
+    }
+	if f.Flags&VFS_MIND != 0 {
 		flags = append(flags, "mind")
-	if f.Flags&VFS_RBR != 0:
+    }
+	if f.Flags&VFS_RBR != 0 {
 		flags = append(flags, "rbr")
-	if f.Flags&VFS_RBW != 0:
+    }
+	if f.Flags&VFS_RBW != 0 {
 		flags = append(flags, "rbw")
-	if f.Flags&VFS_DISCONNECTED != 0:
+    }
+	if f.Flags&VFS_DISCONNECTED != 0 {
 		flags = append(flags, "disconnected")
-	if f.Flags&VFS_SHUTDOWN != 0:
+    }
+	if f.Flags&VFS_SHUTDOWN != 0 {
 		flags = append(flags, "shutdown")
-	if f.Flags&VFS_VMOUNTOK != 0:
+    }
+	if f.Flags&VFS_VMOUNTOK != 0 {
 		flags = append(flags, "vmountok")
-	if f.Flags&VFS_SUSER != 0:
+    }
+	if f.Flags&VFS_SUSER != 0 {
 		flags = append(flags, "suser")
-	if f.Flags&VFS_SOFT_MOUNT != 0:
+    }
+	if f.Flags&VFS_SOFT_MOUNT != 0 {
 		flags = append(flags, "soft")
-	if f.Flags&VFS_UNMOUNTED != 0:
+    }
+	if f.Flags&VFS_UNMOUNTED != 0 {
 		flags = append(flags, "unmounted")
-	if f.Flags&VFS_DEADMOUNT != 0:
+    }
+	if f.Flags&VFS_DEADMOUNT != 0 {
 		flags = append(flags, "deadmount")
-	if f.Flags&VFS_SNAPSHOT != 0:
+    }
+	if f.Flags&VFS_SNAPSHOT != 0 {
 		flags = append(flags, "snapshot")
-	if f.Flags&VFS_VCM_ON != 0:
+    }
+	if f.Flags&VFS_VCM_ON != 0 {
 		flags = append(flags, "vcm_on")
-	if f.Flags&VFS_VCM_MONITOR != 0:
+    }
+	if f.Flags&VFS_VCM_MONITOR != 0 {
 		flags = append(flags, "vcm_monitor")
-	if f.Flags&VFS_ATIMEOFF != 0:
+    }
+	if f.Flags&VFS_ATIMEOFF != 0 {
 		flags = append(flags, "noatime")
-	if f.Flags&VFS_READMOSTLY != 0:
+    }
+	if f.Flags&VFS_READMOSTLY != 0 {
 		flags = append(flags, "readmostly")
-	if f.Flags&VFS_CIOR != 0:
+    }
+	if f.Flags&VFS_CIOR != 0 {
 		flags = append(flags, "cior")
-	if f.Flags&VFS_CIO != 0:
+    }
+	if f.Flags&VFS_CIO != 0 {
 		flags = append(flags, "cio")
-	if f.Flags&VFS_DIO != 0:
+    }
+	if f.Flags&VFS_DIO != 0 {
 		flags = append(flags, "dio")
+    }
 
 	return strings.Join(flags, ",")
 }
