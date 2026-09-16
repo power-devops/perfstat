@@ -253,6 +253,7 @@ func perfstatdiskadapter2diskadapter(n *C.perfstat_diskadapter_t) DiskAdapter {
 	d.Version = int64(n.version)
 	d.AdapterType = int64(n.adapter_type)
 	d.DkBSize = int64(n.dk_bsize)
+    d.DkRxfers = int64(n.dk_rxfers)
 	d.DkRserv = int64(n.dk_rserv)
 	d.DkWserv = int64(n.dk_wserv)
 	d.MinRserv = int64(n.min_rserv)
