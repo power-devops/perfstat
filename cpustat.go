@@ -16,7 +16,6 @@ import "C"
 
 import (
 	"fmt"
-	"runtime"
     "sync"
 	"time"
 	"unsafe"
@@ -34,7 +33,10 @@ func CpuStat() ([]CPU, error) {
 	var cpustat *C.perfstat_cpu_t
 	var cpu C.perfstat_id_t
 
-	ncpu := runtime.NumCPU()
+	ncpu := C.perfstat_cpu(nil, nil, C.sizeof_perfstat_cpu_t, 0)
+    if ncpu <= 0 {
+        return nil, fmt.Errorf("perfstat_cpu() error")
+    }
 
 	cpustat_len := C.sizeof_perfstat_cpu_t * C.ulong(ncpu)
 	cpustat = (*C.perfstat_cpu_t)(C.malloc(cpustat_len))
@@ -42,7 +44,7 @@ func CpuStat() ([]CPU, error) {
 	cstr := C.CString(C.FIRST_CPU)
 	C.strcpy(&cpu.name[0], cstr)
 	C.free(unsafe.Pointer(cstr))
-	r := C.perfstat_cpu(&cpu, cpustat, C.sizeof_perfstat_cpu_t, C.int(ncpu))
+	r := C.perfstat_cpu(&cpu, cpustat, C.sizeof_perfstat_cpu_t, ncpu)
 	if r <= 0 {
 		return nil, fmt.Errorf("error perfstat_cpu()")
 	}
