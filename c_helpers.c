@@ -38,6 +38,7 @@ time_t boottime()
     setutxent();
     while ( (utmp = getutxent()) != NULL ) {
         if (utmp->ut_type == BOOT_TIME) {
+            endutxent();
             return utmp->ut_tv.tv_sec;
         }
     }
